@@ -67,14 +67,8 @@ public class Driver extends Application {
 		
 		GridPane middleLeftPane = new GridPane();
 		Label compareWith = new Label("Compare with: ");
-		String[] list = calc.getStationsArray();
-		
-		//for (int i = 0; i < calc.getStations().size(); i++) {
-		//	list[i] = calc.getStations().
-		//}
-		calc.getStationsArray();
-		
-		ComboBox stations = new ComboBox(); //FXCollections.observableArrayList(list)
+		String[] list = calc.getStationsArray();		
+		ComboBox stations = new ComboBox(FXCollections.observableArrayList(list));
 		
 		//Add Mesonet.txt functionality...
 		middleLeftPane.add(compareWith, 0, 0);
