@@ -80,8 +80,9 @@ public class Driver extends Application {
 		showStationButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				Integer distance = Integer.valueOf(chosenDistance.getText());
 				String chosen = stations.getValue().toString();
-				displayedStations.setText(calc.matchingStations(Integer.valueOf(value.getText()), chosen).toString());
+				displayedStations.setText(calc.matchingStations(distance, chosen).toString());
 			}
 		});
 		

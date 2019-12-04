@@ -32,7 +32,7 @@ public class MesoCalculations {
 		for (String station: stations) {
 			int count = 0;
 			for (int i = 0; i < station.length(); i++) {
-				if (chosen.charAt(i) == station.charAt(i)) {
+				if (chosen.charAt(i) != station.charAt(i)) {
 					count++;
 				}
 			}
