@@ -5,6 +5,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
@@ -69,13 +71,19 @@ public class Driver extends Application {
 		Label compareWith = new Label("Compare with: ");
 		String[] list = calc.getStationsArray();		
 		ComboBox stations = new ComboBox(FXCollections.observableArrayList(list));
-		
-		//Add Mesonet.txt functionality...
 		middleLeftPane.add(compareWith, 0, 0);
 		middleLeftPane.add(stations, 1, 0);
 		middleLeftPane.setPadding(smallGridPadding);
 		middleLeftPane.setHgap(10);
 		middleLeftPane.setVgap(10);
+		
+		showStationButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				String chosen = stations.getValue().toString();
+				displayedStations.setText(calc.matchingStations(Integer.valueOf(value.getText()), chosen).toString());
+			}
+		});
 		
 		Button calculateButton = new Button("Calculate HD");
 		//Add Mesonet.txt functionality...
