@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 
 public class Driver extends Application {
@@ -62,6 +63,8 @@ public class Driver extends Application {
 		Button showStationButton = new Button("Show Station");
 		//Add Mesonet.txt functionality...
 		
+		ListView stationsDisplayed = new ListView();
+		
 		TextField displayedStations = new TextField("PERK\n");
 		displayedStations.setEditable(false);
 		displayedStations.setPrefHeight(200);
@@ -81,13 +84,13 @@ public class Driver extends Application {
 		showStationButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				stationsDisplayed.getItems().clear();
 				Integer distance = Integer.valueOf(chosenDistance.getText());
 				String chosen = stations.getValue().toString();
 				TreeSet<String> stationSet = calc.matchingStations(distance, chosen);
-				String result = "";
 				for (String s: stationSet)
-					result += s + "\n";
-				displayedStations.setText(result);
+					stationsDisplayed.getItems().add(s);
+				// TODO: Fix whatever is wrong with this
 			}
 		});
 		
@@ -132,7 +135,7 @@ public class Driver extends Application {
 		gridPane.add(topLeftPane, 0, 0);
 		gridPane.add(slider, 0, 1);
 		gridPane.add(showStationButton, 0, 2);
-		gridPane.add(displayedStations, 0, 3);
+		gridPane.add(stationsDisplayed, 0, 3);
 		gridPane.add(middleLeftPane, 0, 4);
 		gridPane.add(calculateButton, 0, 5);
 		gridPane.add(bottomLeftPane, 0, 6);
