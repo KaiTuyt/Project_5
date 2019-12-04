@@ -32,7 +32,6 @@ public class Driver extends Application {
 		} catch (Exception e) {System.out.println(e);}
 		
 		GridPane gridPane = new GridPane();
-		Insets bigGridPadding = new Insets(10, 10, 10, 10);
 		Insets smallGridPadding = new Insets(5, 5, 5, 5);
 		Scene display = new Scene(gridPane);
 		
@@ -61,20 +60,15 @@ public class Driver extends Application {
 		});
 				
 		Button showStationButton = new Button("Show Station");
-		//Add Mesonet.txt functionality...
 		
-		ListView stationsDisplayed = new ListView();
-		
-		TextField displayedStations = new TextField("PERK\n");
-		displayedStations.setEditable(false);
-		displayedStations.setPrefHeight(200);
-		displayedStations.setAlignment(Pos.TOP_LEFT);
-		//Add Mesonet.txt functionality...
+		ListView displayStations = new ListView();
+		displayStations.setPrefHeight(200);
 		
 		GridPane middleLeftPane = new GridPane();
 		Label compareWith = new Label("Compare with: ");
 		String[] list = calc.getStationsArray();		
 		ComboBox stations = new ComboBox(FXCollections.observableArrayList(list));
+		stations.getSelectionModel().selectFirst();
 		middleLeftPane.add(compareWith, 0, 0);
 		middleLeftPane.add(stations, 1, 0);
 		middleLeftPane.setPadding(smallGridPadding);
@@ -84,18 +78,17 @@ public class Driver extends Application {
 		showStationButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				stationsDisplayed.getItems().clear();
+				displayStations.getItems().clear();
 				Integer distance = Integer.valueOf(chosenDistance.getText());
 				String chosen = stations.getValue().toString();
 				TreeSet<String> stationSet = calc.matchingStations(distance, chosen);
 				for (String s: stationSet)
-					stationsDisplayed.getItems().add(s);
-				// TODO: Fix whatever is wrong with this
+					displayStations.getItems().add(s);
 			}
 		});
 		
 		Button calculateButton = new Button("Calculate HD");
-		//Add Mesonet.txt functionality...
+		// TODO: Add Mesonet.txt functionality...
 		
 		GridPane bottomLeftPane = new GridPane();
 		for (int i = 0; i < 5; i++) {
@@ -117,31 +110,32 @@ public class Driver extends Application {
 		TextField distance4 = new TextField("89");
 		distance4.setEditable(false);
 		bottomLeftPane.add(distance4, 1, 4);
-		//Add Mesonet.txt functionality...
+		// TODO: Add Mesonet.txt functionality...
 		Button addStationButton = new Button("Add Station");
-		//Add Mesonet.txt functionality...
+		// TODO: Add Mesonet.txt functionality...
 		bottomLeftPane.add(addStationButton, 0, 5);
 		TextField customStation = new TextField("ZERO");
 		customStation.setEditable(true);
-		//Add Mesonet.txt functionality...
+		// TODO: Add Mesonet.txt functionality...
+		// TODO: Have error-checking capabilities (check zyBooks)
 		bottomLeftPane.add(customStation, 1, 5);
-		bottomLeftPane.setPadding(bigGridPadding);
+		bottomLeftPane.setPadding(smallGridPadding);
 		bottomLeftPane.setHgap(20);
 		bottomLeftPane.setVgap(20);
-
 		
 		Label freeZone = new Label("FREE ZONE: You are free to fill this area with a creative idea.");
+		// TODO: Figure out something to do with the free zone!!!
 		
 		gridPane.add(topLeftPane, 0, 0);
 		gridPane.add(slider, 0, 1);
 		gridPane.add(showStationButton, 0, 2);
-		gridPane.add(stationsDisplayed, 0, 3);
+		gridPane.add(displayStations, 0, 3);
 		gridPane.add(middleLeftPane, 0, 4);
 		gridPane.add(calculateButton, 0, 5);
 		gridPane.add(bottomLeftPane, 0, 6);
 		gridPane.add(freeZone, 1, 0);
 		
-		gridPane.setPadding(bigGridPadding);
+		gridPane.setPadding(smallGridPadding);
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);
 
@@ -153,9 +147,7 @@ public class Driver extends Application {
 	}
 
 	public static void main(String[] args) {
-
 		launch(args);
-
 	}
 
 }
