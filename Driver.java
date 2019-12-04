@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.TreeSet;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -82,7 +83,11 @@ public class Driver extends Application {
 			public void handle(ActionEvent event) {
 				Integer distance = Integer.valueOf(chosenDistance.getText());
 				String chosen = stations.getValue().toString();
-				displayedStations.setText(calc.matchingStations(distance, chosen).toString());
+				TreeSet<String> stationSet = calc.matchingStations(distance, chosen);
+				String result = "";
+				for (String s: stationSet)
+					result += s + "\n";
+				displayedStations.setText(result);
 			}
 		});
 		
