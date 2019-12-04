@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,6 +19,12 @@ public class Driver extends Application {
 
 	@Override
 	public void start(Stage applicationStage) {
+		
+		MesoCalculations calc = new MesoCalculations();
+		try {
+			calc.read("Mesonet.txt");
+		} catch (Exception e) {}
+		
 		GridPane gridPane = new GridPane();
 		Insets bigGridPadding = new Insets(10, 10, 10, 10);
 		Insets smallGridPadding = new Insets(5, 5, 5, 5);
