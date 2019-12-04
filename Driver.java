@@ -3,6 +3,8 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
@@ -23,7 +25,7 @@ public class Driver extends Application {
 		MesoCalculations calc = new MesoCalculations();
 		try {
 			calc.read("Mesonet.txt");
-		} catch (Exception e) {}
+		} catch (Exception e) {System.out.println(e);}
 		
 		GridPane gridPane = new GridPane();
 		Insets bigGridPadding = new Insets(10, 10, 10, 10);
@@ -65,7 +67,15 @@ public class Driver extends Application {
 		
 		GridPane middleLeftPane = new GridPane();
 		Label compareWith = new Label("Compare with: ");
-		ComboBox stations = new ComboBox();
+		String[] list = calc.getStationsArray();
+		
+		//for (int i = 0; i < calc.getStations().size(); i++) {
+		//	list[i] = calc.getStations().
+		//}
+		calc.getStationsArray();
+		
+		ComboBox stations = new ComboBox(); //FXCollections.observableArrayList(list)
+		
 		//Add Mesonet.txt functionality...
 		middleLeftPane.add(compareWith, 0, 0);
 		middleLeftPane.add(stations, 1, 0);

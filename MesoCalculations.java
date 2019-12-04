@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 public class MesoCalculations {
 	
-	TreeSet<MesoStation> stations;
+	private TreeSet<String> stations;
 	
 	public MesoCalculations() {
 		stations = new TreeSet<>();
@@ -16,19 +16,23 @@ public class MesoCalculations {
     {
     	BufferedReader read = new BufferedReader(new FileReader(filename));
     	String line = read.readLine();
+    	ArrayList<String> array = new ArrayList<>();
     	while (line != null) {
-    		stations.add(new MesoStation(line.toUpperCase()));
+    		array.add(line);
         	line = read.readLine();
     	}
     	read.close();
+    	for (String s: array) {
+    		stations.add(new String(s));
+    	}
     }
 	
-	public TreeSet<MesoStation> matchingStations(int distance, MesoStation chosen) {
-		TreeSet<MesoStation> matching = new TreeSet<>();
-		for (MesoStation station: stations) {
+	public TreeSet<String> matchingStations(int distance, String chosen) {
+		TreeSet<String> matching = new TreeSet<>();
+		for (String station: stations) {
 			int count = 0;
-			for (int i = 0; i < station.getStID().length(); i++) {
-				if (chosen.getStID().charAt(i) == station.getStID().charAt(i)) {
+			for (int i = 0; i < station.length(); i++) {
+				if (chosen.charAt(i) == station.charAt(i)) {
 					count++;
 				}
 			}
@@ -38,4 +42,21 @@ public class MesoCalculations {
 		return matching;
 	}
 	
+	public void addStation(String station) {
+		stations.add(station);
+	}
+	
+	public TreeSet<String> getStations() {
+		return stations;
+	}
+	
+	public String[] getStationsArray() {
+		String[] array = new String[stations.size()];
+		Object[] arrayObjects = stations.toArray();
+		for (int i = 0; i < stations.size(); i++) {
+			array[i] = arrayObjects[i].toString();
+		}
+		return array;
+	}
+
 }
