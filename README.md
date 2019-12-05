@@ -50,3 +50,10 @@ Below is a further explanation of each of the files in depth and their propertie
 `protected GridPane majorGridPane; protected GridPane topLeftPane; protected GridPane middleLeftPane; protected GridPane bottomLeftPane; protected GridPane topRightPane; protected GridPane topMiddleRightPane` - Each individual GridPane that the GUI uses. MajorGridPane holds each other GridPane (each other should be self-explanatory).
 
 `protected Scene display` - Scene that holds all components and displays the GUI.
+
+##### **Methods**
+
+`@Override public void start(Stage applicationStage)` - Starts the creation of the GUI. First creates a new MesoCalculations, then reads in the Mesonet file to fill it. The method then creates each GridPane and its' corresponding elements, adding listeners to the Slider and actions to the Buttons when needed. It finished by setting the scene and title, then shows the GUI to the user.
+
+`public static void main(String[] args)` - Simply launches the GUI.
+
