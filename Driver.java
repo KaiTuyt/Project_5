@@ -32,7 +32,8 @@ public class Driver extends Application {
 	public TextField chosenIndex;
 	public TextField asciiAverage;
 	public TextField letterAverage;
-	public TextField similarStations;
+	public TextField numberOfSimilar;
+	public Label similarStations;
 
 	@Override
 	public void start(Stage applicationStage) {
@@ -142,7 +143,8 @@ public class Driver extends Application {
 				chosenIndex.setText("" + (calc.getStationIndex(chosen) + 1));
 				asciiAverage.setText("" + calc.calAverage(chosen));
 				letterAverage.setText("" + calc.letterAverage(chosen));
-				similarStations.setText("" + calc.numberOfStationWithLetterAvg(chosen.charAt(0)));
+				numberOfSimilar.setText("" + calc.numberOfStationWithLetterAvg(chosen.charAt(0)));
+				similarStations.setText("" + calc.stationsWithLetterAvg(chosen.charAt(0)));
 			}
 		});
 		
@@ -202,7 +204,7 @@ public class Driver extends Application {
 		Label letterLabel = new Label("Letter Average:");
 		letterAverage = new TextField("");
 		Label similarLabel = new Label("Stations with \nsimilar start letter:");
-		similarStations = new TextField("");
+		numberOfSimilar = new TextField("");
 		topMiddleRightPane.setPadding(smallGridPadding);
 		topMiddleRightPane.setHgap(PANE_HGAP);
 		topMiddleRightPane.setVgap(PANE_VGAP);
@@ -210,7 +212,11 @@ public class Driver extends Application {
 		topMiddleRightPane.add(asciiAverage, 1, 0);
 		topMiddleRightPane.add(letterLabel, 0, 1);
 		topMiddleRightPane.add(letterAverage, 1, 1);
+		topMiddleRightPane.add(similarLabel, 0, 2);
+		topMiddleRightPane.add(numberOfSimilar, 1, 2);
 		
+		similarStations = new Label("");
+
 		// TODO: Figure out something to do with the free zone!!!
 		
 		gridPane.add(topLeftPane, 0, 0);
@@ -224,6 +230,7 @@ public class Driver extends Application {
 		gridPane.add(topRightPane, 1, 1);
 		gridPane.add(randomButton, 1, 2);
 		gridPane.add(topMiddleRightPane, 1, 3);
+		//gridPane.add(similarStations, 1, 4);
 		
 		gridPane.setPadding(smallGridPadding);
 		gridPane.setHgap(PANE_HGAP);

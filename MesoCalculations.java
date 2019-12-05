@@ -128,5 +128,21 @@ public class MesoCalculations {
 		}
 		return same;
 	}
+	
+	public String stationsWithLetterAvg(char c) {
+		String output = "";
+		int count = 0;
+		for (String s: stations) {
+			if (s.charAt(0) == c) {
+				output += (s + " ");
+				count++;
+				if (count > 3) {
+					output += "\n";
+					count = 0;
+				}
+			}
+		}
+		return output;
+	}
 
 }
