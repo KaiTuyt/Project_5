@@ -27,6 +27,7 @@ public class Driver extends Application {
 	
 	public String[] list;	
 	public ComboBox stations;
+	public TextField chosenIndex;
 
 	@Override
 	public void start(Stage applicationStage) {
@@ -133,6 +134,7 @@ public class Driver extends Application {
 				distance3.setText("" + part3);
 				int part4 = calc.matchingDistance(4, chosen);
 				distance4.setText("" + part4);
+				chosenIndex.setText("" + (calc.getStationIndex(chosen) + 1));
 			}
 		});
 		
@@ -152,18 +154,26 @@ public class Driver extends Application {
 					Alert alert = new Alert(AlertType.ERROR, 
 							"Incorrectly formatted station ID inserted. Please insert a valid station ID.");
 					alert.showAndWait();
-					System.out.println("Error!");
 				}
 			}
 		});
 		
-		// TODO: Have error-checking capabilities (check zyBooks)
 		bottomLeftPane.add(customStation, 1, 5);
 		bottomLeftPane.setPadding(smallGridPadding);
 		bottomLeftPane.setHgap(20);
 		bottomLeftPane.setVgap(20);
 		
-		Label freeZone = new Label("FREE ZONE: You are free to fill this area with a creative idea.");
+		
+		
+		Label freeZone = new Label("FREE ZONE: Additional Functions");
+		
+		GridPane topRightPane = new GridPane();
+		Label index = new Label("Station Index: ");
+		chosenIndex = new TextField();
+		chosenIndex.setEditable(false);
+		topRightPane.add(index, 0, 0);
+		topRightPane.add(chosenIndex, 1, 0);
+		
 		// TODO: Figure out something to do with the free zone!!!
 		
 		gridPane.add(topLeftPane, 0, 0);
@@ -174,6 +184,7 @@ public class Driver extends Application {
 		gridPane.add(calculateButton, 0, 5);
 		gridPane.add(bottomLeftPane, 0, 6);
 		gridPane.add(freeZone, 1, 0);
+		gridPane.add(topRightPane, 1, 1);
 		
 		gridPane.setPadding(smallGridPadding);
 		gridPane.setHgap(10);

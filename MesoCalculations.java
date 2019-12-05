@@ -73,5 +73,17 @@ public class MesoCalculations {
 		}
 		return array;
 	}
+	
+	public int getStationIndex(String station) {
+		String[] array = this.getStationsArray();
+		int result = -1;
+		for (int i = 0; i < array.length; i++) {
+			if (array[i].equals(station)) {
+				result = i;
+				break;
+			}
+		}
+		return result;
+	}
 
 }
