@@ -25,15 +25,51 @@ import javafx.scene.control.Slider;
 
 public class Driver extends Application {
 	
+	private static final int SLIDER_DEFAULT = 2;
+	private static final int SLIDER_HIGH = 4;
+	private static final int SLIDER_LOW = 1;
+	private static final int LISTVIEW_HEIGHT = 200;
 	private static final int PANE_VGAP = 10;
 	private static final int PANE_HGAP = 20;
-	public String[] list;	
-	public ComboBox stations;
-	public TextField chosenIndex;
-	public TextField asciiAverage;
-	public TextField letterAverage;
-	public TextField numberOfSimilar;
-	public Label similarStations;
+	private static final Insets SMALL_GRID_PADDING = new Insets(5, 5, 5, 5);
+	
+	protected String[] list;
+	
+	protected Slider slider;
+	protected ComboBox stations;
+	protected Button showStationButton;
+	protected Button calculateButton;
+	protected Button addStationButton;
+	protected Button randomButton;
+	protected TextField chosenIndex;
+	protected TextField asciiAverage;
+	protected TextField letterAverage;
+	protected TextField numberOfSimilar;
+	protected TextField chosenDistance;
+	protected TextField distance0;
+	protected TextField distance1;
+	protected TextField distance2;
+	protected TextField distance3;
+	protected TextField distance4;
+	protected TextField customStation;
+	protected ListView displayStations;
+	protected Label similarStations;
+	protected Label enterLabel;
+	protected Label value;
+	protected Label compareWith;
+	protected Label freeZone;
+	protected Label index;
+	protected Label asciiLabel;
+	protected Label letterLabel;
+	protected Label similarLabel;
+	protected GridPane majorGridPane;
+	protected GridPane topLeftPane;
+	protected GridPane middleLeftPane;
+	protected GridPane bottomLeftPane;
+	protected GridPane topRightPane;
+	protected GridPane topMiddleRightPane;
+	protected Scene display;
+	
 
 	@Override
 	public void start(Stage applicationStage) {
@@ -43,27 +79,26 @@ public class Driver extends Application {
 			calc.read("Mesonet.txt");
 		} catch (Exception e) {System.out.println(e);}
 		
-		GridPane gridPane = new GridPane();
-		Insets smallGridPadding = new Insets(5, 5, 5, 5);
-		Scene display = new Scene(gridPane);
+		majorGridPane = new GridPane();
+		display = new Scene(majorGridPane);
 		
-		GridPane topLeftPane = new GridPane();
-		Label enterLabel = new Label("Enter Hamming Distance: ");
-		TextField chosenDistance = new TextField("2");
+		topLeftPane = new GridPane();
+		enterLabel = new Label("Enter Hamming Distance: ");
+		chosenDistance = new TextField("2");
 		chosenDistance.setEditable(false);
 		topLeftPane.add(enterLabel, 0, 0);
 		topLeftPane.add(chosenDistance, 1, 0);
-		topLeftPane.setPadding(smallGridPadding);
+		topLeftPane.setPadding(SMALL_GRID_PADDING);
 		topLeftPane.setHgap(PANE_HGAP);
 		topLeftPane.setVgap(PANE_VGAP);
 		
-		Slider slider = new Slider(1, 4, 2);
+		slider = new Slider(SLIDER_LOW, SLIDER_HIGH, SLIDER_DEFAULT);
 		slider.setSnapToTicks(true);
 		slider.setShowTickMarks(true);
 		slider.setShowTickLabels(true);
 		slider.setMinorTickCount(0);
 		slider.setMajorTickUnit(1);
-		Label value = new Label(Integer.toString((int)slider.getValue()));
+		value = new Label(Integer.toString((int)slider.getValue()));
 		slider.valueProperty().addListener(new ChangeListener<Number>() {
 			public void changed(ObservableValue<? extends Number> ov,
 				Number oldVal, Number newVal) {
@@ -71,19 +106,19 @@ public class Driver extends Application {
 			}
 		});
 				
-		Button showStationButton = new Button("Show Station");
+		showStationButton = new Button("Show Station");
 		
-		ListView displayStations = new ListView();
-		displayStations.setPrefHeight(200);
+		displayStations = new ListView();
+		displayStations.setPrefHeight(LISTVIEW_HEIGHT);
 		
-		GridPane middleLeftPane = new GridPane();
-		Label compareWith = new Label("Compare with: ");
+		middleLeftPane = new GridPane();
+		compareWith = new Label("Compare with: ");
 		list = calc.getStationsArray();		
 		stations = new ComboBox(FXCollections.observableArrayList(list));
 		stations.getSelectionModel().selectFirst();
 		middleLeftPane.add(compareWith, 0, 0);
 		middleLeftPane.add(stations, 1, 0);
-		middleLeftPane.setPadding(smallGridPadding);
+		middleLeftPane.setPadding(SMALL_GRID_PADDING);
 		middleLeftPane.setHgap(PANE_HGAP);
 		middleLeftPane.setVgap(PANE_VGAP);
 		
@@ -99,47 +134,42 @@ public class Driver extends Application {
 			}
 		});
 		
-		Button calculateButton = new Button("Calculate HD");
+		calculateButton = new Button("Calculate HD");
 		
-		GridPane bottomLeftPane = new GridPane();
+		bottomLeftPane = new GridPane();
 		for (int i = 0; i < 5; i++) {
 			Label distanceLabel = new Label("Distance " + i);
 			bottomLeftPane.add(distanceLabel, 0, i);
 		}
-		TextField distance0 = new TextField();
+		distance0 = new TextField();
 		distance0.setEditable(false);
 		bottomLeftPane.add(distance0, 1, 0);
-		TextField distance1 = new TextField();
+		distance1 = new TextField();
 		distance1.setEditable(false);
 		bottomLeftPane.add(distance1, 1, 1);
-		TextField distance2 = new TextField();
+		distance2 = new TextField();
 		distance2.setEditable(false);
 		bottomLeftPane.add(distance2, 1, 2);
-		TextField distance3 = new TextField();
+		distance3 = new TextField();
 		distance3.setEditable(false);
 		bottomLeftPane.add(distance3, 1, 3);
-		TextField distance4 = new TextField();
+		distance4 = new TextField();
 		distance4.setEditable(false);
 		bottomLeftPane.add(distance4, 1, 4);
-		Button addStationButton = new Button("Add Station");
+		addStationButton = new Button("Add Station");
 		bottomLeftPane.add(addStationButton, 0, 5);
-		TextField customStation = new TextField();
+		customStation = new TextField();
 		customStation.setEditable(true);
 		
 		calculateButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				String chosen = stations.getValue().toString();
-				int part0 = calc.matchingDistance(0, chosen);
-				distance0.setText("" + part0);
-				int part1 = calc.matchingDistance(1, chosen);
-				distance1.setText("" + part1);
-				int part2 = calc.matchingDistance(2, chosen);
-				distance2.setText("" + part2);
-				int part3 = calc.matchingDistance(3, chosen);
-				distance3.setText("" + part3);
-				int part4 = calc.matchingDistance(4, chosen);
-				distance4.setText("" + part4);
+				distance0.setText("" + calc.matchingDistance(0, chosen));
+				distance1.setText("" + calc.matchingDistance(1, chosen));
+				distance2.setText("" + calc.matchingDistance(2, chosen));
+				distance3.setText("" + calc.matchingDistance(3, chosen));
+				distance4.setText("" + calc.matchingDistance(4, chosen));
 				chosenIndex.setText("" + (calc.getStationIndex(chosen) + 1));
 				asciiAverage.setText("" + calc.calAverage(chosen));
 				letterAverage.setText("" + calc.letterAverage(chosen));
@@ -153,7 +183,7 @@ public class Driver extends Application {
 			public void handle(ActionEvent event) {
 				displayStations.getItems().clear();
 				String custom = customStation.getText();
-				if (!(custom.length() > 4 || custom.length() < 4)) {
+				if (custom.length() == 4) {
 					calc.addStation(custom);
 					list = calc.getStationsArray();
 					stations = new ComboBox(FXCollections.observableArrayList(list));
@@ -165,26 +195,27 @@ public class Driver extends Application {
 							"Incorrectly formatted station ID inserted. Please insert a valid station ID.");
 					alert.showAndWait();
 				}
+				customStation.setText("");
 			}
 		});
 		
 		bottomLeftPane.add(customStation, 1, 5);
-		bottomLeftPane.setPadding(smallGridPadding);
+		bottomLeftPane.setPadding(SMALL_GRID_PADDING);
 		bottomLeftPane.setHgap(PANE_HGAP);
 		bottomLeftPane.setVgap(PANE_VGAP);
 		
 		
 		
-		Label freeZone = new Label("FREE ZONE: Additional Functions");
+		freeZone = new Label("FREE ZONE: Additional Functions");
 		
-		GridPane topRightPane = new GridPane();
-		Label index = new Label("Station Index: ");
+		topRightPane = new GridPane();
+		index = new Label("Station Index: ");
 		chosenIndex = new TextField();
 		chosenIndex.setEditable(false);
 		topRightPane.add(index, 0, 0);
 		topRightPane.add(chosenIndex, 1, 0);
 		
-		Button randomButton = new Button("Create Random Station");
+		randomButton = new Button("Create Random Station");
 		
 		randomButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -198,14 +229,14 @@ public class Driver extends Application {
 			}
 		});
 		
-		GridPane topMiddleRightPane = new GridPane();
-		Label asciiLabel = new Label("Ascii Average:");
+		topMiddleRightPane = new GridPane();
+		asciiLabel = new Label("Ascii Average:");
 		asciiAverage = new TextField("");
-		Label letterLabel = new Label("Letter Average:");
+		letterLabel = new Label("Letter Average:");
 		letterAverage = new TextField("");
-		Label similarLabel = new Label("Stations with \nsimilar start letter:");
+		similarLabel = new Label("Stations with \nsimilar start letter:");
 		numberOfSimilar = new TextField("");
-		topMiddleRightPane.setPadding(smallGridPadding);
+		topMiddleRightPane.setPadding(SMALL_GRID_PADDING);
 		topMiddleRightPane.setHgap(PANE_HGAP);
 		topMiddleRightPane.setVgap(PANE_VGAP);
 		topMiddleRightPane.add(asciiLabel, 0, 0);
@@ -219,22 +250,22 @@ public class Driver extends Application {
 
 		// TODO: Figure out something else to do with the free zone!!!
 		
-		gridPane.add(topLeftPane, 0, 0);
-		gridPane.add(slider, 0, 1);
-		gridPane.add(showStationButton, 0, 2);
-		gridPane.add(displayStations, 0, 3);
-		gridPane.add(middleLeftPane, 0, 4);
-		gridPane.add(calculateButton, 0, 5);
-		gridPane.add(bottomLeftPane, 0, 6);
-		gridPane.add(freeZone, 1, 0);
-		gridPane.add(topRightPane, 1, 1);
-		gridPane.add(randomButton, 1, 2);
-		gridPane.add(topMiddleRightPane, 1, 3);
-		gridPane.add(similarStations, 1, 4);
+		majorGridPane.add(topLeftPane, 0, 0);
+		majorGridPane.add(slider, 0, 1);
+		majorGridPane.add(showStationButton, 0, 2);
+		majorGridPane.add(displayStations, 0, 3);
+		majorGridPane.add(middleLeftPane, 0, 4);
+		majorGridPane.add(calculateButton, 0, 5);
+		majorGridPane.add(bottomLeftPane, 0, 6);
+		majorGridPane.add(freeZone, 1, 0);
+		majorGridPane.add(topRightPane, 1, 1);
+		majorGridPane.add(randomButton, 1, 2);
+		majorGridPane.add(topMiddleRightPane, 1, 3);
+		majorGridPane.add(similarStations, 1, 4);
 		
-		gridPane.setPadding(smallGridPadding);
-		gridPane.setHgap(PANE_HGAP);
-		gridPane.setVgap(PANE_VGAP);
+		majorGridPane.setPadding(SMALL_GRID_PADDING);
+		majorGridPane.setHgap(PANE_HGAP);
+		majorGridPane.setVgap(PANE_VGAP);
 
 		applicationStage.setScene(display);
 		applicationStage.setTitle("Hamming Distance");
