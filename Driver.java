@@ -28,6 +28,7 @@ public class Driver extends Application {
 	public String[] list;	
 	public ComboBox stations;
 	public TextField chosenIndex;
+	public TextField asciiAverage;
 
 	@Override
 	public void start(Stage applicationStage) {
@@ -135,6 +136,7 @@ public class Driver extends Application {
 				int part4 = calc.matchingDistance(4, chosen);
 				distance4.setText("" + part4);
 				chosenIndex.setText("" + (calc.getStationIndex(chosen) + 1));
+				asciiAverage.setText("" + calc.calAverage(chosen));
 			}
 		});
 		
@@ -188,7 +190,12 @@ public class Driver extends Application {
 			}
 		});
 		
-		// TODO: Credits roll with stations?
+		GridPane topMiddleRightPane = new GridPane();
+		Label asciiLabel = new Label("Ascii Average:");
+		asciiAverage = new TextField("");
+		topMiddleRightPane.add(asciiLabel, 0, 0);
+		topMiddleRightPane.add(asciiAverage, 1, 0);
+		
 		// TODO: Figure out something to do with the free zone!!!
 		
 		gridPane.add(topLeftPane, 0, 0);
@@ -201,7 +208,7 @@ public class Driver extends Application {
 		gridPane.add(freeZone, 1, 0);
 		gridPane.add(topRightPane, 1, 1);
 		gridPane.add(randomButton, 1, 2);
-		
+		gridPane.add(topMiddleRightPane, 1, 3);
 		
 		gridPane.setPadding(smallGridPadding);
 		gridPane.setHgap(10);

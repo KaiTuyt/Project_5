@@ -105,5 +105,15 @@ public class MesoCalculations {
 		}
 		return custom;
 	}
+	
+	public int calAverage(String station) {
+		int[] cal = new int[3];
+		cal[0] = ((int)Math.ceil((station.charAt(0) + station.charAt(1) + station.charAt(2) + station.charAt(3)) / 4.0));
+		cal[1] = ((station.charAt(0) + station.charAt(1) + station.charAt(2) + station.charAt(3)) / 4);
+		if (((station.charAt(0) + station.charAt(1) + station.charAt(2) + station.charAt(3)) / 4.0) % 1.0 >= 0.5)
+			cal[2] = cal[0];
+		else cal[2] = cal[1];
+		return cal[2];
+	}
 
 }
