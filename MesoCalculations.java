@@ -85,5 +85,25 @@ public class MesoCalculations {
 		}
 		return result;
 	}
+	
+	public String createRandomStation() {
+		String custom = "";
+		//Starts at 48, ends at 57; 10 total
+		//Starts at 65, ends at 90; 26 total
+		for (int i = 0; i < 4; i++) {
+			int number = -1;
+			while (number != 48 && number != 49 && number != 50 && number != 51 && number != 52 && number != 53 && 
+					number != 54 && number != 55 && number != 56 && number != 57 && number != 65 && number != 66 && 
+					number != 67 && number != 68 && number != 69 && number != 70 && number != 71 && number != 72 && 
+					number != 73 && number != 74 && number != 75 && number != 76 && number != 77 && number != 78 && 
+					number != 79 && number != 80 && number != 81 && number != 82 && number != 83 && number != 84 && 
+					number != 85 && number != 86 && number != 87 && number != 88 && number != 89 && number != 90) {
+				number = (int)(Math.random() * 90 + 1);
+			}
+			char character = (char)number;
+			custom += character;
+		}
+		return custom;
+	}
 
 }

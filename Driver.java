@@ -174,6 +174,21 @@ public class Driver extends Application {
 		topRightPane.add(index, 0, 0);
 		topRightPane.add(chosenIndex, 1, 0);
 		
+		Button randomButton = new Button("Create Random Station");
+		
+		randomButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				displayStations.getItems().clear();
+				calc.addStation(calc.createRandomStation());
+				list = calc.getStationsArray();
+				stations = new ComboBox(FXCollections.observableArrayList(list));
+				stations.getSelectionModel().selectFirst();
+				middleLeftPane.add(stations, 1, 0);
+			}
+		});
+		
+		// TODO: Credits roll with stations?
 		// TODO: Figure out something to do with the free zone!!!
 		
 		gridPane.add(topLeftPane, 0, 0);
@@ -185,6 +200,8 @@ public class Driver extends Application {
 		gridPane.add(bottomLeftPane, 0, 6);
 		gridPane.add(freeZone, 1, 0);
 		gridPane.add(topRightPane, 1, 1);
+		gridPane.add(randomButton, 1, 2);
+		
 		
 		gridPane.setPadding(smallGridPadding);
 		gridPane.setHgap(10);
