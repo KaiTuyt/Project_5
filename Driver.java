@@ -25,10 +25,14 @@ import javafx.scene.control.Slider;
 
 public class Driver extends Application {
 	
+	private static final int PANE_VGAP = 10;
+	private static final int PANE_HGAP = 20;
 	public String[] list;	
 	public ComboBox stations;
 	public TextField chosenIndex;
 	public TextField asciiAverage;
+	public TextField letterAverage;
+	public TextField similarStations;
 
 	@Override
 	public void start(Stage applicationStage) {
@@ -49,8 +53,8 @@ public class Driver extends Application {
 		topLeftPane.add(enterLabel, 0, 0);
 		topLeftPane.add(chosenDistance, 1, 0);
 		topLeftPane.setPadding(smallGridPadding);
-		topLeftPane.setHgap(10);
-		topLeftPane.setVgap(10);
+		topLeftPane.setHgap(PANE_HGAP);
+		topLeftPane.setVgap(PANE_VGAP);
 		
 		Slider slider = new Slider(1, 4, 2);
 		slider.setSnapToTicks(true);
@@ -79,8 +83,8 @@ public class Driver extends Application {
 		middleLeftPane.add(compareWith, 0, 0);
 		middleLeftPane.add(stations, 1, 0);
 		middleLeftPane.setPadding(smallGridPadding);
-		middleLeftPane.setHgap(10);
-		middleLeftPane.setVgap(10);
+		middleLeftPane.setHgap(PANE_HGAP);
+		middleLeftPane.setVgap(PANE_VGAP);
 		
 		showStationButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -137,6 +141,8 @@ public class Driver extends Application {
 				distance4.setText("" + part4);
 				chosenIndex.setText("" + (calc.getStationIndex(chosen) + 1));
 				asciiAverage.setText("" + calc.calAverage(chosen));
+				letterAverage.setText("" + calc.letterAverage(chosen));
+				similarStations.setText("" + calc.numberOfStationWithLetterAvg(chosen.charAt(0)));
 			}
 		});
 		
@@ -162,8 +168,8 @@ public class Driver extends Application {
 		
 		bottomLeftPane.add(customStation, 1, 5);
 		bottomLeftPane.setPadding(smallGridPadding);
-		bottomLeftPane.setHgap(20);
-		bottomLeftPane.setVgap(20);
+		bottomLeftPane.setHgap(PANE_HGAP);
+		bottomLeftPane.setVgap(PANE_VGAP);
 		
 		
 		
@@ -193,8 +199,17 @@ public class Driver extends Application {
 		GridPane topMiddleRightPane = new GridPane();
 		Label asciiLabel = new Label("Ascii Average:");
 		asciiAverage = new TextField("");
+		Label letterLabel = new Label("Letter Average:");
+		letterAverage = new TextField("");
+		Label similarLabel = new Label("Stations with \nsimilar start letter:");
+		similarStations = new TextField("");
+		topMiddleRightPane.setPadding(smallGridPadding);
+		topMiddleRightPane.setHgap(PANE_HGAP);
+		topMiddleRightPane.setVgap(PANE_VGAP);
 		topMiddleRightPane.add(asciiLabel, 0, 0);
 		topMiddleRightPane.add(asciiAverage, 1, 0);
+		topMiddleRightPane.add(letterLabel, 0, 1);
+		topMiddleRightPane.add(letterAverage, 1, 1);
 		
 		// TODO: Figure out something to do with the free zone!!!
 		
@@ -211,8 +226,8 @@ public class Driver extends Application {
 		gridPane.add(topMiddleRightPane, 1, 3);
 		
 		gridPane.setPadding(smallGridPadding);
-		gridPane.setHgap(10);
-		gridPane.setVgap(10);
+		gridPane.setHgap(PANE_HGAP);
+		gridPane.setVgap(PANE_VGAP);
 
 		applicationStage.setScene(display);
 		applicationStage.setTitle("Hamming Distance");

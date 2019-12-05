@@ -115,5 +115,18 @@ public class MesoCalculations {
 		else cal[2] = cal[1];
 		return cal[2];
 	}
+	
+	public char letterAverage(String station) {
+		return (char)calAverage(station);
+	}
+	
+	public int numberOfStationWithLetterAvg(char c) {
+		int same = 0;
+		for (String s: stations) {
+			if (s.charAt(0) == c)
+				same++;
+		}
+		return same;
+	}
 
 }
