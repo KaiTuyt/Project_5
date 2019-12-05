@@ -230,7 +230,7 @@ public class Driver extends Application {
 		gridPane.add(topRightPane, 1, 1);
 		gridPane.add(randomButton, 1, 2);
 		gridPane.add(topMiddleRightPane, 1, 3);
-		//gridPane.add(similarStations, 1, 4);
+		gridPane.add(similarStations, 1, 4);
 		
 		gridPane.setPadding(smallGridPadding);
 		gridPane.setHgap(PANE_HGAP);
