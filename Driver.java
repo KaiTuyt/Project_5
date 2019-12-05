@@ -22,6 +22,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 
 public class Driver extends Application {
+	
+	public String[] list;	
+	public ComboBox stations;
 
 	@Override
 	public void start(Stage applicationStage) {
@@ -66,8 +69,8 @@ public class Driver extends Application {
 		
 		GridPane middleLeftPane = new GridPane();
 		Label compareWith = new Label("Compare with: ");
-		String[] list = calc.getStationsArray();		
-		ComboBox stations = new ComboBox(FXCollections.observableArrayList(list));
+		list = calc.getStationsArray();		
+		stations = new ComboBox(FXCollections.observableArrayList(list));
 		stations.getSelectionModel().selectFirst();
 		middleLeftPane.add(compareWith, 0, 0);
 		middleLeftPane.add(stations, 1, 0);
@@ -88,35 +91,68 @@ public class Driver extends Application {
 		});
 		
 		Button calculateButton = new Button("Calculate HD");
-		// TODO: Add Mesonet.txt functionality...
 		
 		GridPane bottomLeftPane = new GridPane();
 		for (int i = 0; i < 5; i++) {
 			Label distanceLabel = new Label("Distance " + i);
 			bottomLeftPane.add(distanceLabel, 0, i);
 		}
-		TextField distance0 = new TextField("0");
+		TextField distance0 = new TextField();
 		distance0.setEditable(false);
 		bottomLeftPane.add(distance0, 1, 0);
-		TextField distance1 = new TextField("0");
+		TextField distance1 = new TextField();
 		distance1.setEditable(false);
 		bottomLeftPane.add(distance1, 1, 1);
-		TextField distance2 = new TextField("1");
+		TextField distance2 = new TextField();
 		distance2.setEditable(false);
 		bottomLeftPane.add(distance2, 1, 2);
-		TextField distance3 = new TextField("30");
+		TextField distance3 = new TextField();
 		distance3.setEditable(false);
 		bottomLeftPane.add(distance3, 1, 3);
-		TextField distance4 = new TextField("89");
+		TextField distance4 = new TextField();
 		distance4.setEditable(false);
 		bottomLeftPane.add(distance4, 1, 4);
-		// TODO: Add Mesonet.txt functionality...
 		Button addStationButton = new Button("Add Station");
 		// TODO: Add Mesonet.txt functionality...
 		bottomLeftPane.add(addStationButton, 0, 5);
-		TextField customStation = new TextField("ZERO");
+		TextField customStation = new TextField();
 		customStation.setEditable(true);
-		// TODO: Add Mesonet.txt functionality...
+		
+		calculateButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				String chosen = stations.getValue().toString();
+				int part0 = calc.matchingDistance(0, chosen);
+				distance0.setText("" + part0);
+				int part1 = calc.matchingDistance(1, chosen);
+				distance1.setText("" + part1);
+				int part2 = calc.matchingDistance(2, chosen);
+				distance2.setText("" + part2);
+				int part3 = calc.matchingDistance(3, chosen);
+				distance3.setText("" + part3);
+				int part4 = calc.matchingDistance(4, chosen);
+				distance4.setText("" + part4);
+			}
+		});
+		
+		addStationButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				displayStations.getItems().clear();
+				String custom = customStation.getText();
+				if (!(custom.length() > 4 || custom.length() < 4)) {
+					calc.addStation(custom);
+					list = calc.getStationsArray();
+					stations = new ComboBox(FXCollections.observableArrayList(list));
+					stations.getSelectionModel().selectFirst();
+					middleLeftPane.add(stations, 1, 0);
+				}
+				else {
+					System.out.println("Error!");
+				}
+			}
+		});
+		
 		// TODO: Have error-checking capabilities (check zyBooks)
 		bottomLeftPane.add(customStation, 1, 5);
 		bottomLeftPane.setPadding(smallGridPadding);

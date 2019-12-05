@@ -42,6 +42,21 @@ public class MesoCalculations {
 		return matching;
 	}
 	
+	public int matchingDistance(int distance, String chosen) {
+		int matching = 0;
+		for (String station: stations) {
+			int count = 0;
+			for (int i = 0; i < station.length(); i++) {
+				if (chosen.charAt(i) != station.charAt(i)) {
+					count++;
+				}
+			}
+			if (count == distance)
+				matching++;
+		}
+		return matching;
+	}
+	
 	public void addStation(String station) {
 		stations.add(station);
 	}
