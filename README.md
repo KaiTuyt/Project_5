@@ -1,1 +1,1 @@
-# Project_5
+﻿# Project 5Project Five consists of two separate files that use the ideas of the first three projects, and implements them into a user-friendly GUI. The two files, Driver.java and MesoCalculations.java,  produce a way for the GUI to display to the user a Hamming Station's selected distances, as well as finding stations with a similar distance, adding stations, creating random stations, and printing stations that start with a certain character.

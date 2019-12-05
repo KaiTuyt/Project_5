@@ -217,7 +217,7 @@ public class Driver extends Application {
 		
 		similarStations = new Label("");
 
-		// TODO: Figure out something to do with the free zone!!!
+		// TODO: Figure out something else to do with the free zone!!!
 		
 		gridPane.add(topLeftPane, 0, 0);
 		gridPane.add(slider, 0, 1);
