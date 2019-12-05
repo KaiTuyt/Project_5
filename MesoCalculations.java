@@ -88,8 +88,9 @@ public class MesoCalculations {
 	
 	public String createRandomStation() {
 		String custom = "";
-		//Starts at 48, ends at 57; 10 total
-		//Starts at 65, ends at 90; 26 total
+		//Numbers: start at 48, end at 57; 10 total
+		//Letters: start at 65, end at 90; 26 total
+		//Possible Characters: 36 total
 		for (int i = 0; i < 4; i++) {
 			int number = -1;
 			while (number != 48 && number != 49 && number != 50 && number != 51 && number != 52 && number != 53 && 
