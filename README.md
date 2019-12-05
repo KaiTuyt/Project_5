@@ -57,3 +57,38 @@ Below is a further explanation of each of the files in depth and their propertie
 
 `public static void main(String[] args)` - Simply launches the GUI.
 
+### MesoCalculations
+
+##### **Variables**
+
+`private TreeSet<String> stations` - TreeSet of Strings that holds the stations provided from Mesonet.txt as well as any other stations that may be added later on.
+
+##### **Constructors**
+
+`public MesoCalculations()` - Initializes stations as a new TreeSet of Strings.
+
+##### **Methods**
+
+`public void read(String filename) throws IOException` - Method that takes in info from a file. Creates a BufferedReader and String to parse through the file, as well as an ArrayList of Strings to hold the stations temporarily. Once each station is added, the reader is closed and each string is moved into stations.
+
+`public TreeSet<String> matchingStations(int distance, String chosen)` - Method which returns a TreeSet of stations with a similar distance to the chosen station. Creates a new TreeSet for the matching stations to be held in, then loops through stations to find each station's hamming distance from the chosen station. If the distance is equal to the one specified in the parameters, the station is added to the matching set. After going through the entire list, the matching set is returned.
+
+`public int matchingDistance(int distance, String chosen)` - Method which returns an integer based on the amount of stations which have a desired distance from a chosen station. Creates an integer that holds the amount of matching stations, then loops through stations to find the distance of each station. If the distance between the current station and the chosen station are the same, then the amount of matching stations increments by 1. After going through every station, the amount of matching stations is returned.
+
+`public void addStation(String station)` - Simply adds the given station to the TreeSet.
+
+`public TreeSet<String> getStations()` - Returns the TreeSet of stations.
+
+`public String[] getStationsArray()` - Returns stations, but formatted as a String array instead of a TreeSet.
+
+`public int getStationIndex(String station)` - Returns the index of a chosen station within the list of stations. First creates a String array that can be iterated through, then loops through the array until the station is found. The resulting index is then returned.
+
+`public String createRandomStation()` - Creates a random station and adds it to the list of stations. This method assumes that all stations will be composed of four characters, represented by either capital letters or numbers. Creates an empty String to hold the custom station. The method then goes through a loop where a random number is generated between 1 and 90 until a number that represents a character that complies with our above constraints is met, then converts that number into a character and adds it to the custom string. This is performed 4 times before returning the custom String.
+
+`public int calAverage(String station)` - Method that finds the ASCII average of a station's characters. Similar to the same method from Project 2. Creates a temporary integer array, storing the ASCII ceiling of the station in the first position and the ASCII floor in the second position. After this, the ASCII average is determined by whether or not the average of the ASCII values is rounded up or down, and is filled in the third slot of the array. The third slot is then returned.
+
+`public char letterAverage(String station)` - Method that finds the letter average of a station's characters. Similar to the same method from Project 2. Calls the calAverage method above and converts the result into a character, which is then returned.
+
+`public int numberOfStationWithLetterAvg(char c)` - Finds the amount of stations that start with the same character as a chosen station. Creates a temporary integer to hold the amount of stations with the same starting character, then iterates over the set of stations, incrementing same whenever the starting character of the current station is equal to the desired character. The method the returns the amount of recorded stations with the same starting character.
+
+`public String stationsWithLetterAvg(char c)` - Prints out the stations that start with the same character as a chosen station. Creates a temporary String to hold the output of the method, then iterates over the set of stations, adding to the output the current station whenever its' starting character is equal to the desired character. After this, the memthod returns the String of stations, with each separated by a space. The program prints up to four stations to a line, helping to minimize the amount of space taken up in the GUI. 
