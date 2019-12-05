@@ -15,6 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -113,7 +115,6 @@ public class Driver extends Application {
 		distance4.setEditable(false);
 		bottomLeftPane.add(distance4, 1, 4);
 		Button addStationButton = new Button("Add Station");
-		// TODO: Add Mesonet.txt functionality...
 		bottomLeftPane.add(addStationButton, 0, 5);
 		TextField customStation = new TextField();
 		customStation.setEditable(true);
@@ -148,6 +149,9 @@ public class Driver extends Application {
 					middleLeftPane.add(stations, 1, 0);
 				}
 				else {
+					Alert alert = new Alert(AlertType.ERROR, 
+							"Incorrectly formatted station ID inserted. Please insert a valid station ID.");
+					alert.showAndWait();
 					System.out.println("Error!");
 				}
 			}
